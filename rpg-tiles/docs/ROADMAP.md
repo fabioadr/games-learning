@@ -11,6 +11,7 @@ _Nada no momento._
 
 | ID | Item | Status | Proposta |
 |----|------|--------|----------|
+| P-002 | Separar o motor do jogo: fronteira verificada dentro do projeto (etapas 1 a 7), pacote e segundo jogo depois (8 e 9). Sugestão: etapas 1 a 4 antes da P-001 | Rascunho | [P-002](propostas/P-002-separar-motor-do-jogo.md) |
 | P-001 | Editor de mapas e tiles, em 11 etapas (começar pelas etapas 0 e 1) | Rascunho | [P-001](propostas/P-001-editor-de-mapas.md) |
 
 ## Backlog
