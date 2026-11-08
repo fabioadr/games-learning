@@ -32,6 +32,7 @@ está disponível nas sessões na nuvem: `require('playwright')`, sem `playwrigh
 - `src/tipos.ts`: o mundo descrito como dados (MapaDef, NpcDef, Portal, BauDef, PlacaDef).
 - `src/dados/`: `tiles.ts` (legenda: caractere -> sólido ou não) e `mapas.ts` (mapas em texto).
 - `src/motor/`: `ator.ts` (movimento tile a tile), `render.ts` (câmera, ordem por Y, janelas), `entrada.ts`.
+- `src/editor/`: `editor.ts` (aba Editor de mapa, pinta em `MAPAS[id].linhas`) e `armazenamento.ts` (persistência no localStorage). Ver `rpg-tiles/docs/EDITOR.md`.
 - `src/jogo/`: `mundo.ts` (estado vivo, `livre(x,y)` é toda a colisão), `jogo.ts` (máquina de estados), `npcIA.ts`.
 
 Princípios que o código ensina e que **não devem ser quebrados** sem avisar:
@@ -41,6 +42,7 @@ Princípios que o código ensina e que **não devem ser quebrados** sem avisar:
 3. Composição em vez de herança (NPC *tem* um `Ator`).
 4. Memória do jogo em `mundo.flags` (ex.: `bau:pocao`).
 5. Estados explícitos (`explorando`, `dialogo`, `transicao`); novos sistemas viram novos estados.
+6. O editor não tem cópia dos mapas: escreve nos mesmos dados que o jogo lê. Não duplique o mapa no editor.
 
 ## Convenções
 
@@ -53,7 +55,7 @@ Princípios que o código ensina e que **não devem ser quebrados** sem avisar:
 
 ## Artefato Claude (jogar no celular)
 
-O build está publicado como Artefato Claude para o dono abrir no iPhone. Detalhes em
+O build (aba Jogo + aba Editor de mapa) está publicado como Artefato Claude para o dono abrir no iPhone. Detalhes em
 `rpg-tiles/docs/ARTEFATO.md`.
 
 - URL do artefato: https://claude.ai/code/artifact/743c882c-6ee2-4faf-bfd9-0e4c01803778?org=99a8aa4b-2e8f-4d33-962b-3d8ad7914f1c

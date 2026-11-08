@@ -66,6 +66,48 @@
 
   .dicas { font-size: 0.85rem; color: var(--texto-suave); line-height: 1.55; margin: 0; }
   kbd { font-family: var(--f-display); color: var(--texto); border: 1px solid var(--texto-suave); border-radius: 3px; padding: 0 5px; }
+
+  [hidden] { display: none !important; }
+
+  /* Abas: alternam entre a tela do jogo e o editor de mapas. */
+  .abas { display: flex; gap: 6px; }
+  .aba {
+    font-family: var(--f-display); font-size: 1rem; color: var(--texto-suave);
+    background: transparent; border: 1.5px solid var(--moldura); border-radius: 6px 6px 0 0;
+    padding: 8px 16px; cursor: pointer; min-height: 44px;
+  }
+  .aba[aria-selected="true"] { color: var(--ouro); background: var(--moldura); border-color: #262e6a; }
+  .aba:focus-visible, .ed-barra button:focus-visible, .ed-tile:focus-visible, select:focus-visible { outline: 2px solid var(--ouro); outline-offset: 2px; }
+
+  /* Editor */
+  .ed-barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .ed-barra button, .ed-barra select {
+    font-family: var(--f-corpo); font-size: 0.85rem; color: var(--texto);
+    background: var(--moldura); border: 1.5px solid #262e6a; border-radius: 6px;
+    padding: 8px 12px; min-height: 40px; cursor: pointer;
+  }
+  .ed-barra button[aria-pressed="true"] { border-color: var(--ouro); color: var(--ouro); }
+  .ed-barra button:disabled { opacity: 0.4; cursor: default; }
+  .ed-barra .testar { background: linear-gradient(var(--janela-a), var(--janela-b)); border-color: var(--borda); margin-left: auto; }
+  .ed-editado { font-size: 0.75rem; color: var(--ouro); border: 1px solid var(--ouro); border-radius: 10px; padding: 1px 8px; }
+  .ed-moldura { overflow: auto; }
+  #ed-tela { touch-action: none; cursor: crosshair; image-rendering: pixelated; }
+  .ed-paleta { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; }
+  .ed-tile {
+    display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative;
+    background: var(--moldura); color: var(--texto); border: 1.5px solid #262e6a; border-radius: 6px;
+    padding: 6px 4px; font-size: 0.72rem; cursor: pointer;
+  }
+  .ed-tile canvas { width: 40px; height: 40px; image-rendering: pixelated; border-radius: 2px; }
+  .ed-tile[aria-pressed="true"] { border-color: var(--ouro); box-shadow: 0 0 0 1px var(--ouro); }
+  .ed-tile i { position: absolute; top: 2px; right: 5px; font-style: normal; color: #ff7a8a; font-size: 0.8rem; }
+  .ed-opcoes { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85rem; color: var(--texto-suave); }
+  .ed-opcoes label { display: flex; align-items: center; gap: 6px; min-height: 28px; }
+  .ed-status { font-size: 0.85rem; color: var(--texto); min-height: 1.3em; margin: 0; }
+  .ed-posicao { font-family: var(--f-display); color: var(--texto-suave); font-size: 0.85rem; margin-left: auto; }
+  details { font-size: 0.85rem; color: var(--texto-suave); }
+  summary { cursor: pointer; min-height: 28px; }
+  #ed-codigo { width: 100%; box-sizing: border-box; height: 12em; margin-top: 8px; background: #060914; color: var(--texto); border: 1px solid #262e6a; border-radius: 6px; padding: 8px; font: 0.8rem/1.4 monospace; }
   @media (prefers-reduced-motion: reduce) { .botao:active { filter: none; } }
 </style>
 </head>
@@ -76,20 +118,59 @@
     <span class="sub">Motor de RPG 16-bit em TypeScript, sem engine</span>
   </header>
 
-  <div class="moldura"><canvas id="tela" aria-label="Tela do jogo"></canvas></div>
-
-  <div class="controles">
-    <div class="dpad">
-      <button class="botao cima" data-dir="cima" aria-label="Cima">▲</button>
-      <button class="botao esq" data-dir="esquerda" aria-label="Esquerda">◀</button>
-      <button class="botao dir" data-dir="direita" aria-label="Direita">▶</button>
-      <button class="botao baixo" data-dir="baixo" aria-label="Baixo">▼</button>
-    </div>
-    <button class="botao acao" data-acao aria-label="Ação">A</button>
+  <div class="abas" role="tablist" aria-label="Telas">
+    <button class="aba" role="tab" id="aba-jogo" aria-controls="painel-jogo" aria-selected="true">Jogo</button>
+    <button class="aba" role="tab" id="aba-editor" aria-controls="painel-editor" aria-selected="false">Editor de mapa</button>
   </div>
 
-  <p class="dicas">Teclado: <kbd>setas</kbd> ou <kbd>WASD</kbd> para andar, <kbd>Espaço</kbd> ou <kbd>Z</kbd> para falar e interagir.
-  Saia de casa, converse com o Ancião, ache o baú e volte a falar com ele: a fala muda porque o mundo guardou uma flag.</p>
+  <section id="painel-jogo" role="tabpanel" aria-labelledby="aba-jogo" class="palco" style="gap:16px">
+  <div class="moldura"><canvas id="tela" aria-label="Tela do jogo"></canvas></div>
+
+    <div class="controles">
+      <div class="dpad">
+        <button class="botao cima" data-dir="cima" aria-label="Cima">▲</button>
+        <button class="botao esq" data-dir="esquerda" aria-label="Esquerda">◀</button>
+        <button class="botao dir" data-dir="direita" aria-label="Direita">▶</button>
+        <button class="botao baixo" data-dir="baixo" aria-label="Baixo">▼</button>
+      </div>
+      <button class="botao acao" data-acao aria-label="Ação">A</button>
+    </div>
+
+    <p class="dicas">Teclado: <kbd>setas</kbd> ou <kbd>WASD</kbd> para andar, <kbd>Espaço</kbd> ou <kbd>Z</kbd> para falar e interagir.
+    Saia de casa, converse com o Ancião, ache o baú e volte a falar com ele: a fala muda porque o mundo guardou uma flag.</p>
+  </section>
+
+  <section id="painel-editor" role="tabpanel" aria-labelledby="aba-editor" class="palco" hidden>
+    <div class="ed-barra">
+      <select id="ed-mapa" aria-label="Mapa"></select>
+      <span class="ed-editado" id="ed-editado" hidden>editado</span>
+      <button type="button" data-ferramenta="pincel" aria-pressed="true">Pincel</button>
+      <button type="button" data-ferramenta="balde" aria-pressed="false">Balde</button>
+      <button type="button" data-ferramenta="heroi" aria-pressed="false">Colocar herói</button>
+      <button type="button" id="ed-desfazer" disabled>Desfazer</button>
+      <button type="button" id="ed-restaurar" disabled>Restaurar original</button>
+      <button type="button" id="ed-copiar">Copiar código</button>
+      <button type="button" class="testar" id="ed-testar">▶ Testar no jogo</button>
+    </div>
+
+    <div class="moldura ed-moldura"><canvas id="ed-tela" aria-label="Mapa em edição"></canvas></div>
+
+    <div class="ed-barra"><p class="ed-status" id="ed-status" aria-live="polite"></p><span class="ed-posicao" id="ed-posicao"></span></div>
+
+    <div class="ed-paleta" id="ed-paleta" role="group" aria-label="Tiles"></div>
+
+    <div class="ed-opcoes">
+      <label><input type="checkbox" id="ed-ver-colisao"> Ver colisão (vermelho = sólido)</label>
+      <label><input type="checkbox" id="ed-ver-objetos" checked> Ver objetos (↪ portal, ◆ baú, i placa, letra = NPC, H herói)</label>
+    </div>
+
+    <details id="ed-codigo-detalhes">
+      <summary>Código do mapa para colar em <code>dados/mapas.ts</code></summary>
+      <textarea id="ed-codigo" readonly spellcheck="false" aria-label="Código do mapa"></textarea>
+    </details>
+
+    <p class="dicas">As edições valem no jogo na hora e ficam salvas neste navegador. Para torná-las permanentes, copie o código e cole no mapa em <code>dados/mapas.ts</code>. O editor mexe só no desenho do chão: NPCs, baús, portais e placas continuam nos dados.</p>
+  </section>
 </main>
 <script type="module" src="/src/main.ts"></script>
 </body>

@@ -1,6 +1,7 @@
 import type { MapaDef } from '../tipos';
 
 // Os mapas são DADOS, não código. Desenhe com caracteres (legenda em tiles.ts).
+// Você pode pintar os tiles na aba "Editor de mapa" e colar o resultado aqui (docs/EDITOR.md).
 // Num projeto maior você exportaria isso de um editor como o Tiled (JSON).
 
 export const MAPAS: Record<string, MapaDef> = {

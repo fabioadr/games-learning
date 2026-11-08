@@ -10,13 +10,21 @@ const MAPA_TECLAS: Record<string, Dir | 'acao'> = {
   Space: 'acao', Enter: 'acao', KeyZ: 'acao',
 };
 
+/** Botões e campos têm o teclado deles (Enter/Espaço/setas): o jogo não pode engolir essas teclas. */
+function campoDeFormulario(alvo: EventTarget | null): boolean {
+  return alvo instanceof HTMLElement && /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(alvo.tagName);
+}
+
 export class Entrada {
   // Pilha de direções seguradas: a última apertada vence (sensação de SNES).
   private seguradas: Dir[] = [];
   private acaoPendente = false;
+  /** Falso quando o jogo não está na tela (ex.: aba do editor): o teclado fica livre para a página. */
+  ativa = true;
 
   constructor() {
     window.addEventListener('keydown', (e) => {
+      if (!this.ativa || campoDeFormulario(e.target)) return;
       const cmd = MAPA_TECLAS[e.code];
       if (!cmd) return;
       e.preventDefault();
@@ -55,4 +63,7 @@ export class Entrada {
   }
 
   limparAcao() { this.acaoPendente = false; }
+
+  /** Esquece teclas seguradas e ação pendente (ao voltar de outra aba, por exemplo). */
+  soltarTudo() { this.seguradas = []; this.acaoPendente = false; }
 }

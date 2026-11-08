@@ -38,6 +38,15 @@ export class Jogo {
     }
   }
 
+  /** Usado pelo editor de mapas: recoloca o herói e volta ao estado "explorando". */
+  teleportar(mapa: string, x: number, y: number) {
+    const outroMapa = this.mundo.mapa.id !== mapa;
+    this.mundo.carregarMapa(mapa, x, y, 'baixo');
+    this.estado = { tipo: 'explorando' };
+    this.entrada.soltarTudo();
+    if (outroMapa) this.mostrarBanner();
+  }
+
   // ---------------------------------------------------------------- explorando
   private atualizarExplorando(dt: number) {
     const { mundo, entrada } = this;

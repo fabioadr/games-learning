@@ -12,6 +12,12 @@ na máquina onde o `npm run dev` roda, então ele não serve para testar no celu
 | Acesso | Privado (só o dono). Compartilhar é pelo menu **Share** da página |
 | Arquivo publicado | `rpg-tiles/artefato/vila-de-pedravento.html` (gerado, não vai para o git) |
 
+## Abas: Jogo e Editor de mapa
+
+O mesmo artefato tem duas abas. **Jogo** é a tela de sempre; **Editor de mapa** pinta os
+tiles e o jogo já reflete a mudança. Detalhes e limites (as edições ficam no `localStorage`
+de cada navegador, não no arquivo publicado) em [`EDITOR.md`](EDITOR.md).
+
 ## Como o build vira artefato
 
 O Artefato é uma página única e só aceita fontes do Google Fonts como recurso externo. O
@@ -50,5 +56,6 @@ Se o artefato foi apagado ou a sessão não tem acesso de edição, publique sem
 ## O que já foi verificado
 
 - Jogo no desktop (Chromium headless): carrega, anda, interage, sem erros de script.
+- Editor: pintar, voltar ao jogo e ver a mudança; persistência após reload; sem erros no console.
 - Layout em iPhone 13 emulado: sem rolagem horizontal, botões de toque visíveis.
 - Não foi testado em um iPhone físico.

@@ -25,7 +25,8 @@ function ret(ctx: CanvasRenderingContext2D, cor: string, x: number, y: number, w
 }
 
 // ------------------------------------------------------------------- tiles
-function desenharTile(ctx: CanvasRenderingContext2D, ch: string, tx: number, ty: number, x: number, y: number, tempo: number) {
+// Exportada de propósito: o editor de mapas desenha com a MESMA função do jogo.
+export function desenharTile(ctx: CanvasRenderingContext2D, ch: string, tx: number, ty: number, x: number, y: number, tempo: number) {
   const nome = TILES[ch]?.nome ?? 'vazio';
   const r = hash(tx, ty);
 

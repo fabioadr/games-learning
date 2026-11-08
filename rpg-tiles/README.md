@@ -11,6 +11,8 @@ npm run check    # só checa os tipos
 
 Controles: setas/WASD andam, Espaço/Enter/Z interagem.
 
+A página tem duas abas: **Jogo** e **Editor de mapa**. Pinte um tile no editor e volte ao jogo: a mudança já está lá. Veja [`docs/EDITOR.md`](docs/EDITOR.md).
+
 Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs/ARTEFATO.md`](docs/ARTEFATO.md) (`npm run artefato` gera o arquivo único).
 
 ## Ordem sugerida de leitura
@@ -26,6 +28,7 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 | 7 | `src/jogo/npcIA.ts` | Comportamentos de NPC como um `switch` sobre dados |
 | 8 | `src/motor/render.ts` | Câmera, ordem de desenho por Y, janelas azuis e efeito máquina de escrever |
 | 9 | `src/motor/entrada.ts` | Teclado e toque alimentando a mesma interface |
+| 10 | `src/editor/editor.ts` e `src/editor/armazenamento.ts` | Um **editor de mapas** é só outra *view* dos mesmos dados: pinta em `MAPAS[id].linhas`, o array que o jogo lê. E como persistir só a diferença (o mapa editado) no `localStorage` |
 
 ## Ideias que valem prestar atenção
 
@@ -33,6 +36,7 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 - **Posição lógica vs. visual.** No começo de um passo, `ator.x/y` já vira o destino. Isso reserva o tile e evita que dois personagens entrem no mesmo lugar. A animação é só uma interpolação.
 - **Composição.** Herói e NPC não herdam de uma classe base. O NPC *tem* um `Ator` dentro dele, mais os dados de comportamento.
 - **Flags.** `mundo.flags` é a memória do jogo. Abrir o baú liga `bau:pocao`, e as falas do Ancião e da Mãe mudam por causa disso. Missões inteiras de RPG são cadeias de flags.
+- **Dados editáveis.** O editor não tem cópia do mapa: ele altera o mesmo `linhas` que o `Mundo` lê. Por isso cada pincelada vale no jogo na hora. Essa é a vantagem de descrever o mundo como dados (princípio 1): qualquer ferramenta consegue mexer neles.
 - **Estados.** Durante o diálogo, o mundo para porque só o estado `explorando` atualiza os NPCs. Batalha, menu e loja seriam mais um `case` no `switch`.
 
 ## Exercícios, em ordem de dificuldade
@@ -43,4 +47,7 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 4. Troque os retângulos por um tileset de imagem (`drawImage` recortando 16x16).
 5. Adicione encontros aleatórios na grama: a cada passo, 1 chance em 20 de entrar no estado `batalha`.
 6. Implemente a batalha ATB: cada combatente tem uma barra que enche com a velocidade; cheia, ele age.
-7. Exporte os mapas do editor [Tiled](https://www.mapeditor.org/) em JSON em vez de escrever as linhas à mão.
+7. ~~Faça um editor de mapas.~~ **Feito:** aba `Editor de mapa` (`src/editor/`), com pincel, balde, desfazer, colocar herói, visão de colisão e exportação do código. Próximos passos naturais, em ordem de dificuldade:
+   - redimensionar o mapa (adicionar/remover linhas e colunas, cuidando de NPCs e portais que ficariam fora);
+   - mover NPCs, baús e portais arrastando (hoje o editor só mostra os marcadores);
+   - ler e gravar o mapa em JSON, no formato do [Tiled](https://www.mapeditor.org/), em vez de colar linhas em `dados/mapas.ts`.

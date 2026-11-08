@@ -13,6 +13,11 @@ Quase tudo se faz editando dados. Só mexa em `src/motor/` ou `src/jogo/` quando
 2. A aparência fica em `motor/render.ts`, na função de desenho de tile, com um `case` pelo `nome`.
    Sem esse `case` o tile aparece preto (`default`).
 
+## Editor de mapa (aba da página)
+Para mexer só na grade de tiles, prefira a aba **Editor de mapa** (`rpg-tiles/docs/EDITOR.md`):
+pinta, o jogo reflete na hora, e **Copiar código** gera o `linhas` para colar em `dados/mapas.ts`.
+Ele não edita NPCs, baús, portais nem placas, e não redimensiona o mapa.
+
 ## Novo mapa
 1. Em `dados/mapas.ts`, crie a entrada em `MAPAS` com `id`, `nome`, `linhas` (todas do mesmo
    comprimento, um caractere por tile), `portais`, `npcs`, `baus`, `placas`.
