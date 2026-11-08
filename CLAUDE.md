@@ -31,8 +31,8 @@ está disponível nas sessões na nuvem: `require('playwright')`, sem `playwrigh
 - `src/main.ts`: game loop (input, atualizar, desenhar) com `dt`.
 - `src/tipos.ts`: o mundo descrito como dados (MapaDef, NpcDef, Portal, BauDef, PlacaDef).
 - `src/dados/`: `tiles.ts` (legenda: caractere -> sólido ou não) e `mapas.ts` (mapas em texto).
-- `src/motor/`: `ator.ts` (movimento tile a tile), `render.ts` (câmera, ordem por Y, janelas), `entrada.ts`.
-- `src/editor/`: `editor.ts` (aba Editor de mapa, pinta em `MAPAS[id].linhas`) e `armazenamento.ts` (persistência no localStorage). Ver `rpg-tiles/docs/EDITOR.md`.
+- `src/motor/`: `ator.ts` (movimento tile a tile), `render.ts` (câmera, ordem por Y, janelas), `desenhoTiles.ts` (aparência dos tiles, compartilhada com o editor), `entrada.ts`.
+- `src/editor/`: aba Editor de mapa (P-001). `editor.ts` (eventos, ferramentas, desenho) escreve direto em `MAPAS`; `operacoes.ts`, `objetos.ts`, `validacao.ts`, `historico.ts`, `exportar.ts`, `armazenamento.ts` (localStorage). Ver `rpg-tiles/docs/EDITOR.md`.
 - `src/jogo/`: `mundo.ts` (estado vivo, `livre(x,y)` é toda a colisão), `jogo.ts` (máquina de estados), `npcIA.ts`.
 
 Princípios que o código ensina e que **não devem ser quebrados** sem avisar:

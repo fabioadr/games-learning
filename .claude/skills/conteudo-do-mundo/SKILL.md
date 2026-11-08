@@ -15,8 +15,9 @@ Quase tudo se faz editando dados. Só mexa em `src/motor/` ou `src/jogo/` quando
 
 ## Editor de mapa (aba da página)
 Para mexer só na grade de tiles, prefira a aba **Editor de mapa** (`rpg-tiles/docs/EDITOR.md`):
-pinta, o jogo reflete na hora, e **Copiar código** gera o `linhas` para colar em `dados/mapas.ts`.
-Ele não edita NPCs, baús, portais nem placas, e não redimensiona o mapa.
+pinta tiles, cria mapas, redimensiona e move/edita NPCs, baús, placas e portais; o jogo reflete
+na hora e **Copiar código** gera a entrada inteira do mapa para `dados/mapas.ts`. Os avisos do
+editor apontam conteúdo quebrado. Falas condicionais ainda se editam só no código.
 
 ## Novo mapa
 1. Em `dados/mapas.ts`, crie a entrada em `MAPAS` com `id`, `nome`, `linhas` (todas do mesmo

@@ -14,8 +14,8 @@ na máquina onde o `npm run dev` roda, então ele não serve para testar no celu
 
 ## Abas: Jogo e Editor de mapa
 
-O mesmo artefato tem duas abas. **Jogo** é a tela de sempre; **Editor de mapa** pinta os
-tiles e o jogo já reflete a mudança. Detalhes e limites (as edições ficam no `localStorage`
+O mesmo artefato tem duas abas. **Jogo** é a tela de sempre; **Editor de mapa** edita os
+mapas (tiles, tamanho, NPCs, baús, placas e portais) e o jogo já reflete a mudança. Detalhes e limites (as edições ficam no `localStorage`
 de cada navegador, não no arquivo publicado) em [`EDITOR.md`](EDITOR.md).
 
 ## Como o build vira artefato

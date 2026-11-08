@@ -81,17 +81,23 @@
 
   /* Editor */
   .ed-barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .ed-barra button, .ed-barra select {
+  .ed-barra button, .ed-barra select, .ed-tamanho button, .ed-form button, .ed-avisos button {
     font-family: var(--f-corpo); font-size: 0.85rem; color: var(--texto);
     background: var(--moldura); border: 1.5px solid #262e6a; border-radius: 6px;
     padding: 8px 12px; min-height: 40px; cursor: pointer;
   }
   .ed-barra button[aria-pressed="true"] { border-color: var(--ouro); color: var(--ouro); }
-  .ed-barra button:disabled { opacity: 0.4; cursor: default; }
+  button:disabled { opacity: 0.4; cursor: default; }
   .ed-barra .testar { background: linear-gradient(var(--janela-a), var(--janela-b)); border-color: var(--borda); margin-left: auto; }
+  .ed-barra .perigo, .ed-form .perigo { border-color: #8a3040; color: #ffb3bf; }
+  .ed-grupo { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
+  .ed-zoom { font-family: var(--f-display); min-width: 3ch; text-align: center; color: var(--texto-suave); }
   .ed-editado { font-size: 0.75rem; color: var(--ouro); border: 1px solid var(--ouro); border-radius: 10px; padding: 1px 8px; }
-  .ed-moldura { overflow: auto; }
-  #ed-tela { touch-action: none; cursor: crosshair; image-rendering: pixelated; }
+  .ed-moldura { overflow: auto; max-height: 72vh; }
+  #ed-tela { touch-action: none; cursor: crosshair; image-rendering: pixelated; max-width: none; }
+  #ed-tela[data-ferramenta="mao"] { cursor: grab; }
+  #ed-tela[data-ferramenta="objetos"] { cursor: pointer; }
+  .ed-info { flex-wrap: nowrap; align-items: flex-start; }
   .ed-paleta { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 6px; }
   .ed-tile {
     display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative;
@@ -103,11 +109,28 @@
   .ed-tile i { position: absolute; top: 2px; right: 5px; font-style: normal; color: #ff7a8a; font-size: 0.8rem; }
   .ed-opcoes { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85rem; color: var(--texto-suave); }
   .ed-opcoes label { display: flex; align-items: center; gap: 6px; min-height: 28px; }
-  .ed-status { font-size: 0.85rem; color: var(--texto); min-height: 1.3em; margin: 0; }
-  .ed-posicao { font-family: var(--f-display); color: var(--texto-suave); font-size: 0.85rem; margin-left: auto; }
-  details { font-size: 0.85rem; color: var(--texto-suave); }
-  summary { cursor: pointer; min-height: 28px; }
-  #ed-codigo { width: 100%; box-sizing: border-box; height: 12em; margin-top: 8px; background: #060914; color: var(--texto); border: 1px solid #262e6a; border-radius: 6px; padding: 8px; font: 0.8rem/1.4 monospace; }
+  .ed-status { font-size: 0.85rem; color: var(--texto); min-height: 1.3em; margin: 0; flex: 1; }
+  .ed-posicao { font-family: var(--f-display); color: var(--texto-suave); font-size: 0.8rem; text-align: right; }
+  .ed-painel { background: #10153a; border: 1px solid #262e6a; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 10px; font-size: 0.85rem; color: var(--texto-suave); }
+  details.ed-painel { display: block; }
+  details.ed-painel > * + * { margin-top: 10px; }
+  .ed-painel h2 { font-family: var(--f-display); font-size: 1rem; color: var(--ouro); margin: 0; font-weight: 500; }
+  summary { cursor: pointer; min-height: 28px; color: var(--texto); }
+  .ed-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; align-items: end; }
+  .ed-campo { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--texto-suave); }
+  .ed-campo input, .ed-campo select, .ed-campo textarea, .ed-texto {
+    font: 0.85rem var(--f-corpo); color: var(--texto); background: #060914;
+    border: 1px solid #262e6a; border-radius: 6px; padding: 7px 8px; min-height: 36px; box-sizing: border-box; width: 100%;
+  }
+  .ed-campo input[type="color"] { padding: 2px; height: 36px; }
+  .ed-campo textarea { resize: vertical; }
+  .ed-campo input:focus-visible, .ed-campo select:focus-visible, .ed-campo textarea:focus-visible, .ed-texto:focus-visible { outline: 2px solid var(--ouro); outline-offset: 1px; }
+  .ed-nota { margin: 0; font-size: 0.8rem; line-height: 1.5; }
+  .ed-texto { height: 11em; font: 0.78rem/1.4 monospace; }
+  .ed-avisos { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .ed-avisos button { width: 100%; text-align: left; border-color: #7a5a1a; color: #ffd28a; min-height: 36px; }
+  .ed-tamanho { display: grid; grid-template-columns: 1fr auto auto; gap: 6px 8px; align-items: center; max-width: 320px; }
+  .ed-tamanho button { min-width: 44px; }
   @media (prefers-reduced-motion: reduce) { .botao:active { filter: none; } }
 </style>
 </head>
@@ -144,32 +167,98 @@
     <div class="ed-barra">
       <select id="ed-mapa" aria-label="Mapa"></select>
       <span class="ed-editado" id="ed-editado" hidden>editado</span>
-      <button type="button" data-ferramenta="pincel" aria-pressed="true">Pincel</button>
-      <button type="button" data-ferramenta="balde" aria-pressed="false">Balde</button>
-      <button type="button" data-ferramenta="heroi" aria-pressed="false">Colocar herói</button>
-      <button type="button" id="ed-desfazer" disabled>Desfazer</button>
-      <button type="button" id="ed-restaurar" disabled>Restaurar original</button>
-      <button type="button" id="ed-copiar">Copiar código</button>
       <button type="button" class="testar" id="ed-testar">▶ Testar no jogo</button>
     </div>
 
-    <div class="moldura ed-moldura"><canvas id="ed-tela" aria-label="Mapa em edição"></canvas></div>
+    <div class="ed-barra" role="group" aria-label="Ferramentas">
+      <button type="button" data-ferramenta="pincel" aria-pressed="true">Pincel</button>
+      <button type="button" data-ferramenta="balde" aria-pressed="false">Balde</button>
+      <button type="button" data-ferramenta="retangulo" aria-pressed="false">Retângulo</button>
+      <button type="button" data-ferramenta="contagotas" aria-pressed="false">Conta-gotas</button>
+      <button type="button" data-ferramenta="objetos" aria-pressed="false">Objetos</button>
+      <button type="button" data-ferramenta="heroi" aria-pressed="false">Herói</button>
+      <button type="button" data-ferramenta="mao" aria-pressed="false">Mão</button>
+    </div>
 
-    <div class="ed-barra"><p class="ed-status" id="ed-status" aria-live="polite"></p><span class="ed-posicao" id="ed-posicao"></span></div>
+    <div class="ed-barra">
+      <button type="button" id="ed-desfazer" disabled title="Ctrl+Z">↶ Desfazer</button>
+      <button type="button" id="ed-refazer" disabled title="Ctrl+Shift+Z">↷ Refazer</button>
+      <span class="ed-grupo">
+        <button type="button" id="ed-zoom-menos" aria-label="Diminuir zoom">−</button>
+        <span id="ed-zoom-valor" class="ed-zoom">1x</span>
+        <button type="button" id="ed-zoom-mais" aria-label="Aumentar zoom">+</button>
+      </span>
+    </div>
+
+    <div class="moldura ed-moldura" id="ed-moldura"><canvas id="ed-tela" aria-label="Mapa em edição"></canvas></div>
+
+    <div class="ed-barra ed-info"><p class="ed-status" id="ed-status" aria-live="polite"></p><span class="ed-posicao" id="ed-posicao"></span></div>
+
+    <section class="ed-painel" id="ed-objeto" hidden aria-label="Objeto">
+      <h2 id="ed-objeto-titulo">Objeto</h2>
+      <div class="ed-barra" id="ed-objeto-novos" hidden>
+        <button type="button" data-novo="npc">+ NPC</button>
+        <button type="button" data-novo="bau">+ Baú</button>
+        <button type="button" data-novo="placa">+ Placa</button>
+        <button type="button" data-novo="portal">+ Portal</button>
+      </div>
+      <div class="ed-form" id="ed-objeto-form"></div>
+      <div class="ed-barra"><button type="button" id="ed-objeto-remover" class="perigo" hidden>Remover objeto</button></div>
+    </section>
 
     <div class="ed-paleta" id="ed-paleta" role="group" aria-label="Tiles"></div>
 
     <div class="ed-opcoes">
-      <label><input type="checkbox" id="ed-ver-colisao"> Ver colisão (vermelho = sólido)</label>
-      <label><input type="checkbox" id="ed-ver-objetos" checked> Ver objetos (↪ portal, ◆ baú, i placa, letra = NPC, H herói)</label>
+      <label><input type="checkbox" id="ed-ver-grade"> Grade</label>
+      <label><input type="checkbox" id="ed-ver-colisao"> Colisão (vermelho = sólido)</label>
+      <label><input type="checkbox" id="ed-ver-objetos" checked> Objetos (↪ portal, ◆ baú, i placa, letra = NPC, H herói)</label>
     </div>
 
-    <details id="ed-codigo-detalhes">
-      <summary>Código do mapa para colar em <code>dados/mapas.ts</code></summary>
-      <textarea id="ed-codigo" readonly spellcheck="false" aria-label="Código do mapa"></textarea>
+    <details class="ed-painel" open>
+      <summary id="ed-avisos-titulo">Avisos</summary>
+      <ul class="ed-avisos" id="ed-avisos"></ul>
     </details>
 
-    <p class="dicas">As edições valem no jogo na hora e ficam salvas neste navegador. Para torná-las permanentes, copie o código e cole no mapa em <code>dados/mapas.ts</code>. O editor mexe só no desenho do chão: NPCs, baús, portais e placas continuam nos dados.</p>
+    <details class="ed-painel">
+      <summary>Mapa: nome e tamanho</summary>
+      <label class="ed-campo">Nome <input type="text" id="ed-nome"></label>
+      <p class="ed-nota">Tamanho: <span id="ed-tamanho"></span>. As linhas/colunas novas usam o tile do pincel. Somar em cima ou à esquerda empurra objetos e portais que chegam aqui.</p>
+      <div class="ed-tamanho">
+        <span>Linha em cima</span><button type="button" data-borda="cima" data-delta="1">+</button><button type="button" data-borda="cima" data-delta="-1">−</button>
+        <span>Linha embaixo</span><button type="button" data-borda="baixo" data-delta="1">+</button><button type="button" data-borda="baixo" data-delta="-1">−</button>
+        <span>Coluna à esquerda</span><button type="button" data-borda="esquerda" data-delta="1">+</button><button type="button" data-borda="esquerda" data-delta="-1">−</button>
+        <span>Coluna à direita</span><button type="button" data-borda="direita" data-delta="1">+</button><button type="button" data-borda="direita" data-delta="-1">−</button>
+      </div>
+      <div class="ed-barra"><button type="button" id="ed-restaurar" class="perigo" disabled>Restaurar original</button></div>
+    </details>
+
+    <details class="ed-painel" id="ed-novo-detalhes">
+      <summary>Novo mapa</summary>
+      <div class="ed-form">
+        <label class="ed-campo">Id <input type="text" id="ed-novo-id" placeholder="caverna" spellcheck="false"></label>
+        <label class="ed-campo">Nome <input type="text" id="ed-novo-nome" placeholder="Caverna Úmida"></label>
+        <label class="ed-campo">Largura <input type="number" id="ed-novo-l" value="12" min="3" max="64"></label>
+        <label class="ed-campo">Altura <input type="number" id="ed-novo-a" value="10" min="3" max="64"></label>
+      </div>
+      <p class="ed-nota">O mapa nasce preenchido com o tile do pincel.</p>
+      <div class="ed-barra"><button type="button" id="ed-novo-criar">Criar mapa</button></div>
+    </details>
+
+    <details class="ed-painel">
+      <summary>Importar linhas</summary>
+      <p class="ed-nota">Cole o trecho <code>linhas: [ ... ]</code> de <code>dados/mapas.ts</code> (ou uma linha do mapa por linha de texto). Substitui os tiles do mapa aberto; pode mudar o tamanho.</p>
+      <textarea id="ed-importar" class="ed-texto" spellcheck="false" aria-label="Linhas para importar"></textarea>
+      <div class="ed-barra"><button type="button" id="ed-importar-btn">Carregar linhas</button></div>
+    </details>
+
+    <details class="ed-painel" id="ed-codigo-detalhes">
+      <summary>Código do mapa para <code>dados/mapas.ts</code></summary>
+      <p class="ed-nota">A entrada inteira do mapa (tiles e objetos). Substitua a entrada com o mesmo id em <code>MAPAS</code>.</p>
+      <textarea id="ed-codigo" class="ed-texto" readonly spellcheck="false" aria-label="Código do mapa"></textarea>
+      <div class="ed-barra"><button type="button" id="ed-copiar">Copiar código</button></div>
+    </details>
+
+    <p class="dicas">As edições valem no jogo na hora e ficam salvas neste navegador. Para torná-las permanentes, copie o código e cole em <code>dados/mapas.ts</code>. Atalhos: <kbd>Ctrl+Z</kbd>, <kbd>Ctrl+Shift+Z</kbd>, <kbd>Delete</kbd> remove o objeto selecionado.</p>
   </section>
 </main>
 <script type="module" src="/src/main.ts"></script>

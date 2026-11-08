@@ -24,6 +24,7 @@ let aba: Aba = 'jogo';
 const editor = new Editor(jogo, () => abrirAba('jogo'));
 
 function abrirAba(nova: Aba) {
+  if (aba === 'editor' && nova === 'jogo') editor.sincronizarJogo();   // NPCs/tamanho mudaram? recarrega
   aba = nova;
   for (const id of ['jogo', 'editor'] as const) {
     document.getElementById(`aba-${id}`)!.setAttribute('aria-selected', String(id === nova));

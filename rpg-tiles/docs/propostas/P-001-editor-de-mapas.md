@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| Status | Rascunho |
+| Status | Em andamento (etapas 0 a 7 feitas, a pedido do dono) |
 | Criada em | 2026-11-08 |
 | Depende de | Nada para as etapas 0 a 9. A etapa 10 depende de E-04 (tileset PNG) |
 
@@ -36,45 +36,45 @@ treina coisas que o jogo sozinho não treina:
 
 Etapas 1 a 4 precisam funcionar com toque, porque o dono testa no iPhone.
 
-- [ ] **Etapa 0: base.** Página `editor.html` no mesmo projeto Vite. O desenho de cada
+- [x] **Etapa 0: base.** Página `editor.html` no mesmo projeto Vite. O desenho de cada
   tile sai de `render.ts` para um módulo compartilhado (`motor/desenhoTiles.ts`), usado
   pelo jogo e pelo editor. **Pronto quando:** o editor abre e mostra a vila exatamente
   como o jogo desenha, e o jogo continua igual. **Conceito:** reaproveitar o renderizador
   sem duplicar código.
 
-- [ ] **Etapa 1: navegar e inspecionar.** Escolher o mapa, zoom, arrastar a vista, grade
+- [x] **Etapa 1: navegar e inspecionar.** Escolher o mapa, zoom, arrastar a vista, grade
   ligável e um painel com coordenada, caractere, nome e "sólido?" do tile sob o
   dedo/cursor. Um modo que pinta de vermelho os tiles sólidos. **Pronto quando:** dá para
   achar qualquer tile da vila e saber se ele bloqueia. **Conceito:** tela → mundo → tile.
 
-- [ ] **Etapa 2: pintar.** Paleta com todos os tiles de `TILES` e pincel com clique ou
+- [x] **Etapa 2: pintar.** Paleta com todos os tiles de `TILES` e pincel com clique ou
   arrasto. As mudanças ficam só na memória. **Pronto quando:** dá para abrir um caminho
   novo na vila arrastando o dedo. **Conceito:** a grade como estado mutável; pointer
   events e captura de ponteiro.
 
-- [ ] **Etapa 3: exportar e importar.** Botão que gera o bloco `linhas: [...]` pronto
+- [x] **Etapa 3: exportar e importar.** Botão que gera o bloco `linhas: [...]` pronto
   para colar em `mapas.ts`, com botão de copiar. Campo para colar linhas e carregar.
   Validação: todas as linhas com a mesma largura e só caracteres conhecidos.
   **Pronto quando:** um mapa editado volta para o jogo por copiar e colar.
   **Conceito:** serialização e validação de conteúdo.
 
-- [ ] **Etapa 4: ferramentas.** Balde (flood fill), retângulo, conta-gotas, desfazer e
+- [x] **Etapa 4: ferramentas.** Balde (flood fill), retângulo, conta-gotas, desfazer e
   refazer. **Pronto quando:** dá para trocar toda a grama de uma área num toque e
   desfazer. **Conceito:** flood fill com fila (BFS); padrão Command.
 
-- [ ] **Etapa 5: mapa novo e redimensionar.** Criar mapa vazio de L×A preenchido com um
+- [x] **Etapa 5: mapa novo e redimensionar.** Criar mapa vazio de L×A preenchido com um
   tile, e adicionar ou remover linhas e colunas nas bordas, deslocando objetos junto.
   **Pronto quando:** dá para criar o interior da loja do E-01 do zero. **Conceito:**
   coordenadas de entidades dependem da origem da grade.
 
-- [ ] **Etapa 6: camada de objetos.** NPCs, baús, placas e portais aparecem como
+- [x] **Etapa 6: camada de objetos.** NPCs, baús, placas e portais aparecem como
   marcadores que se arrastam. Um painel edita os campos (nome, falas, item, destino do
   portal). Avisos: objeto em tile sólido, dois objetos no mesmo tile, portal para mapa
   inexistente ou sem volta. O export da etapa 3 passa a incluir esses dados. **Pronto
   quando:** dá para montar a loja do E-01 inteira no editor, com porta nos dois sentidos.
   **Conceito:** camada de tiles vs. camada de entidades.
 
-- [ ] **Etapa 7: testar no jogo.** Botão "jogar daqui": roda o motor de verdade com o
+- [x] **Etapa 7: testar no jogo.** Botão "jogar daqui": roda o motor de verdade com o
   mapa em memória, herói no tile escolhido. Exige que `Jogo`/`Mundo` recebam o catálogo
   de mapas por parâmetro em vez de importar `MAPAS` direto. **Pronto quando:** dá para
   editar, testar e voltar ao editor sem salvar nada. **Conceito:** motor que não conhece
@@ -113,12 +113,54 @@ Etapas 1 a 4 precisam funcionar com toque, porque o dono testa no iPhone.
 
 ## Perguntas em aberto
 
-1. Editor dentro de `rpg-tiles/` (recomendado) ou em pasta irmã?
-2. Publicar o editor como um segundo Artefato, para usar no iPhone? Se sim, a partir de
-   qual etapa? A sugestão é a etapa 3, quando ele já devolve algo para o jogo.
+1. ~~Editor dentro de `rpg-tiles/` ou em pasta irmã?~~ **Respondida:** dentro, em `src/editor/`.
+2. ~~Publicar o editor como um segundo Artefato?~~ **Respondida pelo dono:** no MESMO artefato,
+   numa aba ao lado do jogo, e o que se edita tem de refletir no jogo na hora.
 3. Fazer o E-04 (tileset PNG) antes da etapa 9, para o editor de tiles já nascer
    trabalhando com imagem?
 
 ## Diário
 
-_Nenhuma etapa feita ainda._
+### 2026-11-08: etapas 0 a 4 e 7 (primeira versão)
+
+O dono pediu o editor numa **aba do mesmo artefato**, com a edição refletindo no jogo.
+Isso mudou duas decisões da proposta:
+
+- **Etapa 0:** em vez de `editor.html`, uma aba na mesma página. O desenho dos tiles foi para
+  `motor/desenhoTiles.ts`, usado pelo jogo e pelo editor.
+- **Etapa 7:** em vez de injetar o catálogo no `Jogo`/`Mundo`, o editor escreve **no próprio
+  `MAPAS`**, o mesmo objeto que o jogo lê (princípio 6 do `CLAUDE.md`). "Testar sem salvar"
+  sai de graça: basta trocar de aba. A injeção do catálogo fica para a P-002 (separar o motor),
+  se ela for aceita.
+- Persistência no `localStorage` por navegador, com a "base" do original para descartar
+  edições velhas quando `mapas.ts` muda. Detalhes em `docs/EDITOR.md`.
+
+### 2026-11-08: etapas 1 a 6 completas
+
+- **Etapa 1:** zoom (1x a 4x), ferramenta Mão para arrastar a vista, grade ligável, painel com
+  coordenada, caractere, nome, "sólido?" e objeto sob o cursor.
+- **Etapa 3:** importar linhas coladas (aceita o trecho `linhas: [...]` ou texto puro), com
+  validação de largura e de caracteres. A exportação passou a gerar a **entrada inteira** do
+  mapa (tiles e objetos), no estilo de `mapas.ts`.
+- **Etapa 4:** retângulo, conta-gotas e refazer. **Decisão:** desfazer com fotos do catálogo
+  (padrão Memento) em vez do padrão Command. Redimensionar mexe em objetos e em portais de
+  outros mapas; com fotos não há como esquecer de desfazer um desses detalhes. Custa memória
+  (até 100 fotos de ~10 KB), irrelevante aqui. O Command continua sendo um bom exercício.
+- **Etapa 5:** novo mapa (id, nome, L×A, preenchido com o pincel) e +/− linha ou coluna em
+  cada borda. Somar em cima ou à esquerda desloca NPCs, baús, placas, portais, os portais de
+  outros mapas que chegam aqui e o próprio herói. Objetos que caem fora são removidos
+  (desfazer traz de volta). Mapas criados no editor podem ser apagados.
+- **Etapa 6:** ferramenta Objetos: tocar seleciona, arrastar move, tile vazio oferece
+  "+ NPC/Baú/Placa/Portal", formulário por tipo (falas, comportamento, cores, destino do
+  portal com "ver o destino"). Falas condicionais são preservadas, mas ainda se editam no
+  código. Avisos: objetos sobrepostos ou fora do mapa, NPC ou portal em tile sólido, placa em
+  tile não sólido, portal para mapa inexistente, destino fora do mapa ou sólido ou em cima de
+  outro portal, mapa sem portal de volta, ids repetidos (baú repetido = mesma flag) e início
+  do jogo inválido.
+- Ao voltar para a aba Jogo, se objetos ou o tamanho do mapa atual mudaram, o mapa é
+  recarregado para recriar os NPCs (tiles não precisam: o jogo já lê o array ao vivo).
+- `confirm()` foi trocado por "toque de novo para confirmar", porque o iframe do artefato
+  pode bloquear diálogos nativos.
+
+**Próximas:** etapa 8 (mapas em JSON e salvar direto pelo `npm run dev`), etapa 9 (editor de
+tipos de tile) e etapa 10 (pixels 16×16, depende do E-04).

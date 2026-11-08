@@ -9,6 +9,7 @@ O `README.md` do projeto explica **como o código funciona hoje**. Esta pasta co
 | [`propostas/`](propostas/) | Uma proposta por arquivo, para tudo que leva mais de uma sessão. |
 | [`propostas/_modelo.md`](propostas/_modelo.md) | Modelo para copiar ao criar uma proposta. |
 | [`CHANGELOG.md`](CHANGELOG.md) | Histórico do que entrou no jogo, por data. |
+| [`EDITOR.md`](EDITOR.md) | Manual do editor de mapa (aba do artefato): ferramentas, avisos, persistência. |
 | [`ARTEFATO.md`](ARTEFATO.md) | Como o build vira Artefato Claude para jogar no celular. |
 
 ## Como uma ideia evolui

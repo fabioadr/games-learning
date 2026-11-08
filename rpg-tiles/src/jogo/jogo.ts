@@ -1,4 +1,4 @@
-import type { Portal } from '../tipos';
+import type { Dir, Portal } from '../tipos';
 import { VEL_TEXTO } from '../config';
 import { INICIO } from '../dados/mapas';
 import { atualizarAtor, frente, OPOSTA, tentarAndar } from '../motor/ator';
@@ -39,9 +39,9 @@ export class Jogo {
   }
 
   /** Usado pelo editor de mapas: recoloca o herói e volta ao estado "explorando". */
-  teleportar(mapa: string, x: number, y: number) {
+  teleportar(mapa: string, x: number, y: number, olhando: Dir = 'baixo') {
     const outroMapa = this.mundo.mapa.id !== mapa;
-    this.mundo.carregarMapa(mapa, x, y, 'baixo');
+    this.mundo.carregarMapa(mapa, x, y, olhando);
     this.estado = { tipo: 'explorando' };
     this.entrada.soltarTudo();
     if (outroMapa) this.mostrarBanner();

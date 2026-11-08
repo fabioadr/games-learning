@@ -28,7 +28,8 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 | 7 | `src/jogo/npcIA.ts` | Comportamentos de NPC como um `switch` sobre dados |
 | 8 | `src/motor/render.ts` | Câmera, ordem de desenho por Y, janelas azuis e efeito máquina de escrever |
 | 9 | `src/motor/entrada.ts` | Teclado e toque alimentando a mesma interface |
-| 10 | `src/editor/editor.ts` e `src/editor/armazenamento.ts` | Um **editor de mapas** é só outra *view* dos mesmos dados: pinta em `MAPAS[id].linhas`, o array que o jogo lê. E como persistir só a diferença (o mapa editado) no `localStorage` |
+| 10 | `src/motor/desenhoTiles.ts` | A aparência de cada tile, num módulo só, usado pelo jogo e pelo editor |
+| 11 | `src/editor/` | Um **editor de mapas** é só outra *view* dos mesmos dados (`editor.ts` escreve em `MAPAS`, que o jogo lê). Ao lado: `operacoes.ts` (flood fill, redimensionar e a origem da grade), `objetos.ts` (camada de objetos), `validacao.ts` (conteúdo também tem bug), `historico.ts` (desfazer com fotos), `exportar.ts` e `armazenamento.ts` |
 
 ## Ideias que valem prestar atenção
 
