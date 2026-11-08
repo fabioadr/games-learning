@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "check": "tsc"
+    "check": "tsc",
+    "artefato": "npm run build && node scripts/gerar-artefato.mjs"
   },
   "devDependencies": {
     "typescript": "^7.0.2",

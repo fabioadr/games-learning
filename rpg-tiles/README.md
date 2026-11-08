@@ -11,6 +11,8 @@ npm run check    # só checa os tipos
 
 Controles: setas/WASD andam, Espaço/Enter/Z interagem.
 
+Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs/ARTEFATO.md`](docs/ARTEFATO.md) (`npm run artefato` gera o arquivo único).
+
 ## Ordem sugerida de leitura
 
 | # | Arquivo | O que ensina |
