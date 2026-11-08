@@ -108,6 +108,16 @@ function desenharTile(ctx: CanvasRenderingContext2D, ch: string, tx: number, ty:
       ret(ctx, '#3e6fb0', x + 2, y + 6, 12, 9);
       ret(ctx, '#f0f0f0', x + 3, y + 2, 10, 4);
       break;
+    case 'prateleira':
+      ret(ctx, '#b58a5a', x, y, TILE, TILE);
+      ret(ctx, '#6b4423', x, y + 1, TILE, 14);
+      ret(ctx, '#4a2f17', x + 1, y + 2, 14, 5);   // vão da prateleira de cima
+      ret(ctx, '#4a2f17', x + 1, y + 9, 14, 5);   // vão da prateleira de baixo
+      ret(ctx, '#c23b3b', x + 3, y + 4, 2, 3);    // frascos (cor varia por tile para não repetir)
+      ret(ctx, tx % 2 ? '#3e8fd1' : '#e8c547', x + 8, y + 3, 2, 4);
+      ret(ctx, '#5fa843', x + 11, y + 11, 2, 3);
+      ret(ctx, tx % 2 ? '#e8c547' : '#c23b3b', x + 4, y + 10, 3, 4);
+      break;
     case 'saida':
       ret(ctx, '#b58a5a', x, y, TILE, TILE);
       ret(ctx, '#3a2d22', x + 2, y + 10, 12, 6);

@@ -19,7 +19,7 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 |---|---------|--------------|
 | 1 | `src/main.ts` | O **game loop**: ler input → atualizar → desenhar, ~60x/s, usando `dt` |
 | 2 | `src/tipos.ts` | Como o mundo é descrito como **dados** (mapas, NPCs, portais, baús) |
-| 3 | `src/dados/tiles.ts` e `src/dados/mapas.ts` | O mapa é uma grade de caracteres + uma legenda de atributos |
+| 3 | `src/dados/tiles.ts` e `src/dados/mapas.ts` | O mapa é uma grade de caracteres + uma legenda de atributos. A `loja` mostra que um mapa novo é só dado: portais de ida e volta, NPC, tile novo |
 | 4 | `src/motor/ator.ts` | Movimento **tile a tile**: posição lógica inteira, posição visual interpolada |
 | 5 | `src/jogo/mundo.ts` | Estado vivo do jogo e a função `livre(x, y)`, que é toda a colisão |
 | 6 | `src/jogo/jogo.ts` | A **máquina de estados** (explorando / diálogo / transição) e os eventos |
@@ -37,7 +37,7 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 
 ## Exercícios, em ordem de dificuldade
 
-1. Crie um terceiro mapa (uma loja) com uma porta nova na vila.
+1. ~~Crie um terceiro mapa (uma loja) com uma porta nova na vila.~~ **Feito:** o `Armazém do Tião` (`loja` em `dados/mapas.ts`), com a porta na vila, o tile `prateleira` e um lojista que reage à flag `bau:pocao`. Próximo passo natural: fazer a loja vender de verdade (exercício 3, o estado `menu`, é a base).
 2. Faça o Guarda sair do caminho quando a flag `bau:pocao` estiver ligada.
 3. Adicione o estado `menu` (tecla Esc) que lista o inventário numa janela azul.
 4. Troque os retângulos por um tileset de imagem (`drawImage` recortando 16x16).

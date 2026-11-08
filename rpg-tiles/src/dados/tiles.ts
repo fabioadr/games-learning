@@ -20,5 +20,6 @@ export const TILES: Record<string, TileDef> = {
   'm': { nome: 'mesa',    solido: true  },
   'c': { nome: 'cama',    solido: true  },
   '_': { nome: 'tapete',  solido: false },
+  'p': { nome: 'prateleira', solido: true },
   'X': { nome: 'saida',   solido: false },
 };

@@ -52,17 +52,18 @@ export const MAPAS: Record<string, MapaDef> = {
       'T..,..=.......P..,.......T',
       'T.....========...........T',
       'T....,.......=......,....T',
-      'T............=...........T',
-      'T....T.......=.....T.....T',
-      'T............=...........T',
-      'T..,.........=.......,...T',
-      'T............=...........T',
+      'T..HHHHHHH...=...........T',
+      'T..HHHHHHH...=.....T.....T',
+      'T..#######...=...........T',
+      'T..###D###P..=.......,...T',
+      'T.....========...........T',
       'T...........,=...........T',
       'T............=...........T',
       'TTTTTTTTTTTTT=TTTTTTTTTTTT',
     ],
     portais: [
       { x: 6, y: 5, paraMapa: 'casa', paraX: 5, paraY: 6, olhando: 'cima' },
+      { x: 6, y: 13, paraMapa: 'loja', paraX: 4, paraY: 6, olhando: 'cima' },
     ],
     npcs: [
       {
@@ -102,7 +103,45 @@ export const MAPAS: Record<string, MapaDef> = {
     ],
     placas: [
       { x: 14, y: 7, texto: ['"Lago de Pedravento. Proibido nadar."'] },
+      { x: 10, y: 13, texto: ['"Armazém do Tião. Poções, ervas e novidades."'] },
     ],
+  },
+  // Terceiro mapa (exercício 1). Repare no que mudou em relação à casa:
+  // só DADOS novos. O motor não ganhou nenhuma linha de lógica para a loja existir.
+  loja: {
+    id: 'loja',
+    nome: 'Armazém do Tião',
+    linhas: [
+      'wwwwwwwwww',
+      'wpppffpppw',
+      'wffffffffw',
+      'wfmmfmmffw',   // balcão com um vão (col 4) onde o lojista fica de pé
+      'wffffffffw',
+      'wff____ffw',
+      'wffffffffw',
+      'wwwwXwwwww',
+    ],
+    portais: [
+      // Portal de VOLTA: leva à vila, no tile abaixo da porta (não em cima dela,
+      // senão o herói pisaria no portal de ida assim que chegasse e ficaria num vai e volta).
+      { x: 4, y: 7, paraMapa: 'vila', paraX: 6, paraY: 14, olhando: 'baixo' },
+    ],
+    npcs: [
+      {
+        id: 'lojista', nome: 'Tião', x: 4, y: 3, olhando: 'baixo',
+        cores: { roupa: '#8a5a2b', cabelo: '#4a4a4a' },
+        comportamento: { tipo: 'parado' },
+        falas: [
+          'Bem-vindo ao Armazém do Tião!',
+          'Ainda não sei vender nada. Isso é exercício para o futuro: um estado "loja".',
+        ],
+        falasCondicionais: [
+          { seFlag: 'bau:pocao', falas: ['Essa Poção na sua bolsa... veio do baú do lago, não foi?', 'Notícia voa. O mundo se lembra do que você fez.'] },
+        ],
+      },
+    ],
+    baus: [],
+    placas: [],
   },
 };
 
