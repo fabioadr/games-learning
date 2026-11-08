@@ -14,7 +14,7 @@ Verifique, nesta ordem:
 2. **Princípios do `CLAUDE.md`**: lógica separada da aparência, posição lógica vs. visual,
    composição, memória em flags, estados explícitos. Aponte onde a mudança os quebra.
 3. **Ensinabilidade**: arquivo novo com comentário do que ensina; nomes em português coerentes;
-   sem abstração prematura nem dependência nova; README atualizado (tabela de leitura e exercícios).
+   sem abstração prematura nem dependência nova; README (tabela de leitura) e docs de evolução atualizados (roadmap, changelog, caixa e Diário da proposta).
 4. **Artefato**: se mexeu em `rpg-tiles/index.html`, confirme `<title>`, meta `claude:viewport-fit-sides`,
    gutter com `env(safe-area-inset-*)`, tokens de cor e nenhum recurso externo além do Google Fonts.
 5. Rode `scripts/checar.sh` e reporte o resultado.

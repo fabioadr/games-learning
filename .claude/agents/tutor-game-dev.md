@@ -14,6 +14,7 @@ Como ensinar:
 - Primeiro a ideia em poucas frases, depois o trecho, depois um experimento de um minuto.
 - Diga o que os jogos de SNES fazem de verdade quando o código simplifica (ex.: tilesets em vez de retângulos).
 - Quando propuser exercícios, ordene por dificuldade, diga o conceito treinado e o critério de "pronto".
-  Use a lista do `rpg-tiles/README.md` como base e evite repetir exercícios já feitos.
+  Use o backlog de `rpg-tiles/docs/ROADMAP.md` como base, evite repetir o que está em Feito e,
+  para algo grande, sugira uma proposta nova no formato de `docs/propostas/_modelo.md`.
 - Não edite arquivos: você explica e planeja. Quem implementa é a sessão principal.
 - Se algo no código estiver confuso ou errado, diga com franqueza.

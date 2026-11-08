@@ -35,12 +35,10 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 - **Flags.** `mundo.flags` é a memória do jogo. Abrir o baú liga `bau:pocao`, e as falas do Ancião e da Mãe mudam por causa disso. Missões inteiras de RPG são cadeias de flags.
 - **Estados.** Durante o diálogo, o mundo para porque só o estado `explorando` atualiza os NPCs. Batalha, menu e loja seriam mais um `case` no `switch`.
 
-## Exercícios, em ordem de dificuldade
+## Evolução do projeto
 
-1. Crie um terceiro mapa (uma loja) com uma porta nova na vila.
-2. Faça o Guarda sair do caminho quando a flag `bau:pocao` estiver ligada.
-3. Adicione o estado `menu` (tecla Esc) que lista o inventário numa janela azul.
-4. Troque os retângulos por um tileset de imagem (`drawImage` recortando 16x16).
-5. Adicione encontros aleatórios na grama: a cada passo, 1 chance em 20 de entrar no estado `batalha`.
-6. Implemente a batalha ATB: cada combatente tem uma barra que enche com a velocidade; cheia, ele age.
-7. Exporte os mapas do editor [Tiled](https://www.mapeditor.org/) em JSON em vez de escrever as linhas à mão.
+Exercícios, propostas e o que já entrou ficam em [`docs/`](docs/README.md):
+
+- [`docs/ROADMAP.md`](docs/ROADMAP.md): o que está em andamento, o próximo passo e o backlog de exercícios.
+- [`docs/propostas/`](docs/propostas/): uma proposta por trabalho maior, dividida em etapas (ex.: o editor de mapas).
+- [`docs/CHANGELOG.md`](docs/CHANGELOG.md): histórico do que mudou no jogo.

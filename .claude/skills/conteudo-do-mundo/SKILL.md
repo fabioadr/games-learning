@@ -37,4 +37,5 @@ estiver ligada ganha). Não coloque NPC em tile sólido nem em cima de portal.
 ## Depois de mudar
 1. `scripts/checar.sh`.
 2. Se mudou o mapa, jogue: `scripts/rodar-jogo.sh` e ande até a mudança (Playwright serve para isso).
-3. Atualize o README do projeto se a mudança for um novo conceito (ex.: nova tabela de leitura).
+3. Atualize o README do projeto se a mudança for um novo conceito (ex.: nova tabela de leitura) e
+   registre a mudança em `docs/CHANGELOG.md` (e no roadmap, se era um item dele).

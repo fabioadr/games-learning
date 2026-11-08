@@ -48,7 +48,14 @@ Princípios que o código ensina e que **não devem ser quebrados** sem avisar:
 - Todo arquivo novo começa com um comentário curto dizendo o que ele ensina.
 - Comentários explicam o *porquê* e o conceito de game dev; o código é pequeno e legível, sem abstração prematura.
 - Sem dependências de runtime. Só TypeScript e Vite como devDependencies.
-- Mudou a mecânica? Atualize a tabela de leitura e os exercícios do README do projeto.
+- Mudou a mecânica? Atualize a tabela de leitura do README do projeto.
+- Evolução é controlada em `rpg-tiles/docs/` (processo em `docs/README.md`), não no README:
+  - `ROADMAP.md`: painel com em andamento, próximo, backlog (exercícios `E-NN`) e feito.
+  - `propostas/P-NNN-*.md`: trabalho que leva mais de uma sessão, quebrado em etapas. Novas propostas
+    partem de `propostas/_modelo.md` e nascem com status Rascunho; só o dono muda para Aceita.
+  - `CHANGELOG.md`: uma linha por mudança entregue, com o ID (`P-001 etapa 2`, `E-03`).
+  - Ao concluir uma etapa ou exercício: marque a caixa na proposta, escreva no Diário dela,
+    adicione a linha no changelog e atualize o roadmap. Tudo no mesmo commit da mudança.
 - Antes de commitar: `scripts/checar.sh`.
 
 ## Artefato Claude (jogar no celular)
@@ -70,6 +77,6 @@ O build está publicado como Artefato Claude para o dono abrir no iPhone. Detalh
 
 ## O que há em .claude/
 
-- `commands/`: `/publicar-artefato`, `/rodar-jogo`, `/checar`, `/exercicio`, `/novo-mapa`.
+- `commands/`: `/publicar-artefato`, `/rodar-jogo`, `/checar`, `/exercicio`, `/novo-mapa`, `/proposta`.
 - `skills/`: `publicar-artefato`, `conteudo-do-mundo` (mapas, NPCs, baús, tiles), `explicar-motor`.
 - `agents/`: `tutor-game-dev` (explica e propõe exercícios), `revisor-didatico` (revisa se a mudança mantém o código ensinável).

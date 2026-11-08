@@ -28,5 +28,5 @@ classe ou um `switch`; explique o *conceito de jogo* e aponte onde ele vive no c
 3. Compare com algo que o dono conhece (C#/React) só quando ajudar, por exemplo: o loop é como um
    `useEffect` com `requestAnimationFrame`; as flags são um `HashSet<string>` global.
 4. Feche com um experimento de um minuto (mudar `VEL_HEROI`, `TILE` ou `VEL_TEXTO` em `src/config.ts`
-   e ver o efeito) ou com o exercício do README mais próximo do assunto.
+   e ver o efeito) ou com o exercício do backlog (`docs/ROADMAP.md`) mais próximo do assunto.
 5. Se a explicação revelar um bug ou ponto confuso no código, diga, em vez de contornar na fala.
