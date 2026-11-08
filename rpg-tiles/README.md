@@ -39,15 +39,10 @@ Para jogar no celular, o build está publicado como Artefato Claude: veja [`docs
 - **Dados editáveis.** O editor não tem cópia do mapa: ele altera o mesmo `linhas` que o `Mundo` lê. Por isso cada pincelada vale no jogo na hora. Essa é a vantagem de descrever o mundo como dados (princípio 1): qualquer ferramenta consegue mexer neles.
 - **Estados.** Durante o diálogo, o mundo para porque só o estado `explorando` atualiza os NPCs. Batalha, menu e loja seriam mais um `case` no `switch`.
 
-## Exercícios, em ordem de dificuldade
+## Evolução do projeto
 
-1. ~~Crie um terceiro mapa (uma loja) com uma porta nova na vila.~~ **Feito:** o `Armazém do Tião` (`loja` em `dados/mapas.ts`), com a porta na vila, o tile `prateleira` e um lojista que reage à flag `bau:pocao`. Próximo passo natural: fazer a loja vender de verdade (exercício 3, o estado `menu`, é a base).
-2. Faça o Guarda sair do caminho quando a flag `bau:pocao` estiver ligada.
-3. Adicione o estado `menu` (tecla Esc) que lista o inventário numa janela azul.
-4. Troque os retângulos por um tileset de imagem (`drawImage` recortando 16x16).
-5. Adicione encontros aleatórios na grama: a cada passo, 1 chance em 20 de entrar no estado `batalha`.
-6. Implemente a batalha ATB: cada combatente tem uma barra que enche com a velocidade; cheia, ele age.
-7. ~~Faça um editor de mapas.~~ **Feito:** aba `Editor de mapa` (`src/editor/`), com pincel, balde, desfazer, colocar herói, visão de colisão e exportação do código. Próximos passos naturais, em ordem de dificuldade:
-   - redimensionar o mapa (adicionar/remover linhas e colunas, cuidando de NPCs e portais que ficariam fora);
-   - mover NPCs, baús e portais arrastando (hoje o editor só mostra os marcadores);
-   - ler e gravar o mapa em JSON, no formato do [Tiled](https://www.mapeditor.org/), em vez de colar linhas em `dados/mapas.ts`.
+Exercícios, propostas e o que já entrou ficam em [`docs/`](docs/README.md):
+
+- [`docs/ROADMAP.md`](docs/ROADMAP.md): o que está em andamento, o próximo passo e o backlog de exercícios.
+- [`docs/propostas/`](docs/propostas/): uma proposta por trabalho maior, dividida em etapas (ex.: o editor de mapas).
+- [`docs/CHANGELOG.md`](docs/CHANGELOG.md): histórico do que mudou no jogo.
